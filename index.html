@@ -5,10 +5,79 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>EkiZero</title>
+
+    <style>
+        #board {
+            background-image: repeating-linear-gradient(#229954 , #ECF0F1);
+        }
+        body {
+            background-color: #212121;
+        }
+    </style>
+
+
+
 </head>
 <body>
-    <canvas id="ticTacToe"></canvas>
+    <canvas id="board"></canvas>
     <p id="message">Hello World!</p>
-    <script src="app.js"></script>
+
+    <script>
+   
+        let canvas = document.getElementById('board');
+        let ctx = canvas.getContext('2d');
+        let msg = document.getElementById('message');
+        let cellSize = 125;
+
+        canvas.width = 3 * cellSize;
+        canvas.height = 3 * cellSize;
+
+        function draw () {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawBoard();
+
+
+            function drawBoard () {
+                ctx.strokeStyle = '#212121';
+                ctx.lineWidth = 10;
+
+                ctx.beginPath();
+                ctx.moveTo(cellSize, 0);
+                ctx.lineTo(cellSize, canvas.height);
+                ctx.stroke();
+
+                ctx.beginPath();
+                ctx.moveTo(cellSize * 2, 0);
+                ctx.lineTo(cellSize * 2, canvas.height);
+                ctx.stroke();
+
+                ctx.beginPath();
+                ctx.moveTo(0, cellSize);
+                ctx.lineTo(canvas.width, cellSize);
+                ctx.stroke();
+
+                ctx.beginPath();
+                ctx.moveTo(0, cellSize * 2);
+                ctx.lineTo(canvas.width, cellSize * 2);
+                ctx.stroke();
+            }
+
+
+            function fillBoard () {
+                // ctx.beginPath();
+                // ctx.moveTo(cellSize, 0);
+                // ctx.lineTo(cellSize, canvas.height);
+                // ctx.stroke();
+            }
+
+
+        }
+        requestAnimationFrame(draw);
+        draw();
+
+    </script>
+
+
+
 </body>
 </html>
