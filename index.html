@@ -28,30 +28,36 @@
 
     <script>
    
+
+   // init
         const canvas = document.getElementById('board');
         const ctx = canvas.getContext('2d');
         const msg = document.getElementById('message');
         const cellSize = 125;
 
         let boardArr = new Array(9).fill(0);
+        // let boardArr = [ 1, 0, 0, 0, 0, -1, -1, 0, 1]
         const patterns = [
             0b111000000, 0b000111000, 0b000000111, // rows
             0b100100100, 0b010010010, 0b001001001, // cols
             0b100010001, 0b001010100, // diagonals
         ];
         const empty = 0;
-        const plyX = 1;
-        const plyO = -1;
+        const playerOne = 1;
+        const playerTwo = -1;
 
         canvas.width = 3 * cellSize;
         canvas.height = 3 * cellSize;
 
+
+        // draw function main
         function draw () {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             drawBoard();
             fillBoard();
 
 
+            // module
             function drawBoard () {
                 ctx.strokeStyle = '#212121';
                 ctx.lineWidth = 5;
@@ -77,17 +83,44 @@
                 ctx.stroke();
             }
 
-
+            // fill
             function fillBoard () {
                 for (let i = 0; i < boardArr.length; i += 1) {
                     let coords = getCellCords(i);
+
+                    ctx.save();
+                    ctx.translate(coords.x + cellSize / 2, coords.y + cellSize / 2);
+                    // So the origin of the canvas is at the center of the current cell, so we can just draw an 'X' or an 'O'
+                    if (boardArr[i] == playerOne) {
+                        putCross();
+                    }
+                    else if (boardArr[i] == playerTwo) {
+                        putZero();
+                    }
+                    ctx.restore();
+
                 }
             }
 
+            // put cross
+            function putCross () {
+                        ctx.beginPath();
+                        ctx.moveTo(-cellSize / 3, -cellSize / 3);
+                        ctx.lineTo(cellSize / 3, cellSize / 3);
+                        ctx.moveTo(cellSize / 3, -cellSize / 3);
+                        ctx.lineTo(-cellSize / 3, cellSize / 3);
+                        ctx.stroke();
+                    }
+
+            // put circle
+            function putZero () {
+                return ;
+            }
 
         }
         requestAnimationFrame(draw);
 
+        // get coordinates
         function getCellCords (cell) {
             let row = (cell % 3) * cellSize;
             let col = Math.floor(cell / 3) * cellSize;
