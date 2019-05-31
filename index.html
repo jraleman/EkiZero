@@ -12,6 +12,7 @@
         }
         body {
             background-color: #212121;
+            text-align: center;
         }
     </style>
 
@@ -19,15 +20,27 @@
 
 </head>
 <body>
+    <h1>Ekizero</h1>
+    <h3 id="message">HTML5 + JavaScript Tic-Tac-Toe Canvas Implementation</h3>
     <canvas id="board"></canvas>
-    <p id="message">Hello World!</p>
+
 
     <script>
    
-        let canvas = document.getElementById('board');
-        let ctx = canvas.getContext('2d');
-        let msg = document.getElementById('message');
-        let cellSize = 125;
+        const canvas = document.getElementById('board');
+        const ctx = canvas.getContext('2d');
+        const msg = document.getElementById('message');
+        const cellSize = 125;
+
+        let boardArray = new Array(9).fill(0);
+        const patterns = [
+            0b111000000, 0b000111000, 0b000000111, // rows
+            0b100100100, 0b010010010, 0b001001001, // cols
+            0b100010001, 0b001010100, // diagonals
+        ];
+        const empty = 0;
+        const plyX = 1;
+        const plyO = -1;
 
         canvas.width = 3 * cellSize;
         canvas.height = 3 * cellSize;
@@ -39,7 +52,7 @@
 
             function drawBoard () {
                 ctx.strokeStyle = '#212121';
-                ctx.lineWidth = 10;
+                ctx.lineWidth = 5;
 
                 ctx.beginPath();
                 ctx.moveTo(cellSize, 0);
