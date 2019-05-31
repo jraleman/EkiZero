@@ -29,25 +29,44 @@
     <script>
    
 
-   // init
+        // init
         const canvas = document.getElementById('board');
         const ctx = canvas.getContext('2d');
         const msg = document.getElementById('message');
-        const cellSize = 125;
 
+        // board
         let boardArr = new Array(9).fill(0);
-        // let boardArr = [ 1, 0, 0, 0, 0, -1, -1, 0, 1]
         const patterns = [
             0b111000000, 0b000111000, 0b000000111, // rows
             0b100100100, 0b010010010, 0b001001001, // cols
             0b100010001, 0b001010100, // diagonals
         ];
-        const empty = 0;
-        const playerOne = 1;
-        const playerTwo = -1;
-
+        const status = {
+            playerOne: 1,
+            playerTwo: -1,
+            empty: 0
+        }
+        const cellSize = 125;
         canvas.width = 3 * cellSize;
         canvas.height = 3 * cellSize;
+
+        // hooks
+        canvas.addEventListener('mouseout', () => {
+            mouse.x = mouse.y - 1;
+        });
+        canvas.addEventListener('mousemove', (e) => {
+            let x = e.pageX - canvas.offsetLeft;
+            let y = e.pageY - canvas.offsetTop;
+            // console.log(x, y)
+            mouse.x = x;
+            mouse.y = y;
+        });
+        canvas.addEventListener('click', (e) => {
+            let x = e.pageX - canvas.offsetLeft;
+            let y = e.pageY - canvas.offsetTop;
+            mouse.x = x;
+            mouse.y = y;
+        });
 
 
         // draw function main
@@ -91,10 +110,10 @@
                     ctx.save();
                     ctx.translate(coords.x + cellSize / 2, coords.y + cellSize / 2);
                     // So the origin of the canvas is at the center of the current cell, so we can just draw an 'X' or an 'O'
-                    if (boardArr[i] == playerOne) {
+                    if (boardArr[i] == status.playerOne) {
                         putCross();
                     }
-                    else if (boardArr[i] == playerTwo) {
+                    else if (boardArr[i] == status.playerTwo) {
                         putZero();
                     }
                     ctx.restore();
@@ -127,6 +146,13 @@
             return ({
                 'x': row,
                 'y': col
+            })
+        }
+
+        function getCellByCoords (x, y) {
+            return ({
+                'x': Math.floor(x / cellSize),
+                'y': Math.floor(y / cellSize)
             })
         }
 
