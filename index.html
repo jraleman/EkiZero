@@ -34,6 +34,11 @@
         const ctx = canvas.getContext('2d');
         const msg = document.getElementById('message');
 
+
+
+
+
+
         // board
         let board = new Array(9).fill(0);
         const patterns = [
@@ -49,6 +54,12 @@
         const cellSize = 125;
         canvas.width = 3 * cellSize;
         canvas.height = 3 * cellSize;
+
+
+
+
+
+
 
         // hooks
         mouse = { 
@@ -74,6 +85,13 @@
             // mouse.y = y;
             play(getCellByCoords(mouse.x, mouse.y));
         });
+
+
+
+
+
+
+
 
 
         // draw function main
@@ -140,11 +158,13 @@
 
             // put circle
             function putZero () {
-                return ;
+                ctx.beginPath();
+                ctx.arc(0, 0, cellSize / 3, 0, Math.PI * 2);
+                ctx.stroke();
             }
-
+            requestAnimationFrame(draw);
         }
-        requestAnimationFrame(draw);
+
 
         // get coordinates
         function getCellCords (cell) {
@@ -168,6 +188,7 @@
         function play (cell) {
             if (board[cell] == status.empty) {
                 board[cell] = currentPlayer;
+                currentPlayer *= -1;
                 console.log('OK')
             }
             else {
