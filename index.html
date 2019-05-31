@@ -13,6 +13,7 @@
         body {
             background-color: #212121;
             text-align: center;
+            color: #f9f9f9
         }
     </style>
 
@@ -21,7 +22,7 @@
 </head>
 <body>
     <h1>Ekizero</h1>
-    <h3 id="message">HTML5 + JavaScript Tic-Tac-Toe Canvas Implementation</h3>
+    <p id="message">HTML5 + JavaScript Tic-Tac-Toe Canvas Implementation</p>
     <canvas id="board"></canvas>
 
 
@@ -32,7 +33,7 @@
         const msg = document.getElementById('message');
         const cellSize = 125;
 
-        let boardArray = new Array(9).fill(0);
+        let boardArr = new Array(9).fill(0);
         const patterns = [
             0b111000000, 0b000111000, 0b000000111, // rows
             0b100100100, 0b010010010, 0b001001001, // cols
@@ -48,6 +49,7 @@
         function draw () {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             drawBoard();
+            fillBoard();
 
 
             function drawBoard () {
@@ -77,15 +79,24 @@
 
 
             function fillBoard () {
-                // ctx.beginPath();
-                // ctx.moveTo(cellSize, 0);
-                // ctx.lineTo(cellSize, canvas.height);
-                // ctx.stroke();
+                for (let i = 0; i < boardArr.length; i += 1) {
+                    let coords = getCellCords(i);
+                }
             }
 
 
         }
         requestAnimationFrame(draw);
+
+        function getCellCords (cell) {
+            let row = (cell % 3) * cellSize;
+            let col = Math.floor(cell / 3) * cellSize;
+            return ({
+                'x': row,
+                'y': col
+            })
+        }
+
         draw();
 
     </script>
