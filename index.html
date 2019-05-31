@@ -35,7 +35,7 @@
         const msg = document.getElementById('message');
 
         // board
-        let boardArr = new Array(9).fill(0);
+        let board = new Array(9).fill(0);
         const patterns = [
             0b111000000, 0b000111000, 0b000000111, // rows
             0b100100100, 0b010010010, 0b001001001, // cols
@@ -51,6 +51,11 @@
         canvas.height = 3 * cellSize;
 
         // hooks
+        mouse = { 
+            x: -1, 
+            y: -1 
+        };
+        currentPlayer = 1;
         canvas.addEventListener('mouseout', () => {
             mouse.x = mouse.y - 1;
         });
@@ -60,12 +65,14 @@
             // console.log(x, y)
             mouse.x = x;
             mouse.y = y;
+            console.log(getCellByCoords(x, y));
         });
         canvas.addEventListener('click', (e) => {
-            let x = e.pageX - canvas.offsetLeft;
-            let y = e.pageY - canvas.offsetTop;
-            mouse.x = x;
-            mouse.y = y;
+            // let x = e.pageX - canvas.offsetLeft;
+            // let y = e.pageY - canvas.offsetTop;
+            // mouse.x = x;
+            // mouse.y = y;
+            play(getCellByCoords(mouse.x, mouse.y));
         });
 
 
@@ -104,16 +111,16 @@
 
             // fill
             function fillBoard () {
-                for (let i = 0; i < boardArr.length; i += 1) {
+                for (let i = 0; i < board.length; i += 1) {
                     let coords = getCellCords(i);
 
                     ctx.save();
                     ctx.translate(coords.x + cellSize / 2, coords.y + cellSize / 2);
                     // So the origin of the canvas is at the center of the current cell, so we can just draw an 'X' or an 'O'
-                    if (boardArr[i] == status.playerOne) {
+                    if (board[i] == status.playerOne) {
                         putCross();
                     }
-                    else if (boardArr[i] == status.playerTwo) {
+                    else if (board[i] == status.playerTwo) {
                         putZero();
                     }
                     ctx.restore();
@@ -149,11 +156,23 @@
             })
         }
 
+        // return one value between zero through 8
         function getCellByCoords (x, y) {
-            return ({
-                'x': Math.floor(x / cellSize),
-                'y': Math.floor(y / cellSize)
-            })
+            return ((Math.floor(x / cellSize) % 3) + Math.floor(y / cellSize) * 3);
+            // return ({
+            //     'x': Math.floor(x / cellSize),
+            //     'y': Math.floor(y / cellSize)
+            // })
+        }
+
+        function play (cell) {
+            if (board[cell] == status.empty) {
+                board[cell] = currentPlayer;
+                console.log('OK')
+            }
+            else {
+                msg.textContent = 'Invalid move';
+            }
         }
 
         draw();
