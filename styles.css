@@ -28,7 +28,7 @@ body {
 }
 #emoji {
     font-size: 142px;
-    display: block;
+    /* display: block; */
 }
 #reset {
     background-color: white;

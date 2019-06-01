@@ -6,7 +6,7 @@ const resetBtn = document.getElementById('reset');
 const patterns = [
     0b111000000, 0b000111000, 0b000000111,  // rows
     0b100100100, 0b010010010, 0b001001001,  // cols
-    0b100010001, 0b001010100   // diagonals
+    0b100010001, 0b001010100  // diagonals
 ];
 const status = {
     playerOne: 1,
@@ -136,8 +136,7 @@ function checkCell (cell) {
     msg.textContent = '';
     if (!gameOver && board[cell] == status.empty) {
         board[cell] = currentPlayer;
-        let gameStatus = checkPattern(currentPlayer);
-        if (gameStatus) {
+        if (checkPattern(currentPlayer)) {
             gameOver = true;
             emoji.textContent = (currentPlayer == status.playerOne ? '🦖' : '🦕');
             msg.textContent = 'Well, looks like we have a winner 😎';
