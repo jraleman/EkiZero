@@ -2,11 +2,11 @@ const canvas = document.getElementById('board');
 const ctx = canvas.getContext('2d');
 const msg = document.getElementById('message');
 const emoji = document.getElementById('emoji');
-
+const resetBtn = document.getElementById('reset');
 const patterns = [
     0b111000000, 0b000111000, 0b000000111,  // rows
     0b100100100, 0b010010010, 0b001001001,  // cols
-    0b100010001, 0b001010100,               // diagonals
+    0b100010001, 0b001010100   // diagonals
 ];
 const status = {
     playerOne: 1,
@@ -40,6 +40,7 @@ mainDraw();
 
 /* Main draw function */
 function mainDraw () {
+    // resetBtn.style.display = "none"; 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     drawBoard();
     fillBoard();
@@ -132,19 +133,25 @@ function checkPattern (player) {
 }
 /* Check if a cell is valid */
 function checkCell (cell) {
-    if (gameOver)
-        return ;
-    if (board[cell] == status.empty) {
+    msg.textContent = '';
+    if (!gameOver && board[cell] == status.empty) {
         board[cell] = currentPlayer;
         let gameStatus = checkPattern(currentPlayer);
         if (gameStatus) {
             gameOver = true;
-            msg.textContent = 'You have won!'
-            emoji.textContent = (currentPlayer == 1 ? '🦖' : '🦕')
+            emoji.textContent = (currentPlayer == status.playerOne ? '🦖' : '🦕');
+            msg.textContent = 'Well, looks like we have a winner 😎';
+            resetBtn.style.display = 'block';
         }
         currentPlayer *= -1;
+        gameOver ? 0 : displayTurn();
     }
-    else {
+    else if (!gameOver) {
         msg.textContent = 'Invalid move';
     }
+}
+/* Display current turn of the player */
+function displayTurn () {
+    msg.textContent = 'Current turn is for '
+    msg.textContent += ((currentPlayer == status.playerOne ? 'X' : 'O'))
 }
