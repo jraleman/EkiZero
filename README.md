@@ -1,6 +1,6 @@
 # EkiZero
 
-![screenshot](resources/screenshot.png)
+<img src="resources/screenshot.png" width=450 height=auto />
 
 ## Resources
 
