@@ -7,23 +7,102 @@
     <title>EkiZero</title>
 
     <style>
+        body {
+            text-align: center;
+            background: linear-gradient(90deg, #e3ffe7 0%, #d9e7ff 100%);
+        }
+        .panel {
+            background-color: #212121;
+            color: #f9f9f9;
+            /* padding: 10%; */
+            /* width: 30%; */
+            align-items: center;
+            display: flex;
+            margin: 0 auto;
+            padding: 5px;
+            display: inline-block;
+        }
+        .title {
+            font-size: 32px;
+            font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+            font-weight: 700;
+            padding-bottom: 36px
+        }
         #board {
             background-image: repeating-linear-gradient(#efefef , #ECF0F1);
+            /* padding: 5px; */
+            margin: 0 auto;
+            display: block
         }
-        body {
-            background-color: #212121;
-            text-align: center;
-            color: #f9f9f9
+        #message {
+            font-size: 24px;
+            font-family: fantasy
+        }
+        #emoji {
+            font-size: 128px;
+            display: inline;
         }
     </style>
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </head>
 <body>
-    <h1>Ekizero</h1>
-    <p id="message">HTML5 + JavaScript Tic-Tac-Toe Canvas Implementation</p>
-    <canvas id="board"></canvas>
+    <h1 class="title">EkiZero</h1>
+    <div class="panel">
+        <canvas id="board"></canvas>
+    </div>
+    <h2 id="message">Click on a square to start the game!</h2>
+    <span id="emoji"></span>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     <script>
@@ -33,6 +112,7 @@
         const canvas = document.getElementById('board');
         const ctx = canvas.getContext('2d');
         const msg = document.getElementById('message');
+        const emoji = document.getElementById('emoji');
 
 
 
@@ -42,9 +122,9 @@
         // board
         let board = new Array(9).fill(0);
         const patterns = [
-            0b111000000, 0b000111000, 0b000000111, // rows
-            0b100100100, 0b010010010, 0b001001001, // cols
-            0b100010001, 0b001010100, // diagonals
+            0b111000000, 0b000111000, 0b000000111,  // rows
+            0b100100100, 0b010010010, 0b001001001,  // cols
+            0b100010001, 0b001010100,               // diagonals
         ];
         const status = {
             playerOne: 1,
@@ -203,7 +283,8 @@
                 let gameStatus = checkWinner(currentPlayer);
                 if (gameStatus) {
                     gameOver = true;
-                    msg.textContent = currentPlayer == 1 ? 'Player 🦖' : 'Player 🦕' + ' Wins!';
+                    msg.textContent = 'You have won!'
+                    emoji.textContent = (currentPlayer == 1 ? '🦖' : '🦕')
                 }
                 currentPlayer *= -1;
             }
