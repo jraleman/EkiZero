@@ -1,6 +1,6 @@
 # EkiZero
 
-![screenshot][resources/screenshot.png)
+![screenshot](resources/screenshot.png)
 
 ## Resources
 
